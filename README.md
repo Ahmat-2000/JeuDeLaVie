@@ -77,13 +77,13 @@ Bienvenue dans le projet **Jeu de la vie**.
 
 ## Auteur
 
-# Ahmat Mahamat Ahmat
+ Ahmat Mahamat Ahmat
 
-# Master 1 cybersécurité à l'université de Caen
+ Master 1 cybersécurité à l'université de Caen
 
 ## Contacts
 
-# Pour des questions, contactez [ahmatmhtlouky@gmail.com](mailto:ahmatmhtlouky@gmail.com).
+ Pour des questions, contactez [ahmatmhtlouky@gmail.com](mailto:ahmatmhtlouky@gmail.com).
 
 ## License
 
