@@ -13,7 +13,7 @@ public class Screen extends JFrame{
         this.setSize(largeur, hauteur);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setResizable(false);
+        this.setResizable(false);
         this.setLayout(new BorderLayout());
         
         this.setIconImage(new ImageIcon("icon.png").getImage());
