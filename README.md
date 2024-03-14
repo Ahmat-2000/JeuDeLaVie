@@ -17,8 +17,7 @@ Ce projet met en avant l'implémentation des patterns MVC et Observer
 
 1. **Cloner le Projet**
 ```bash
- cd src && chmod 711 App.sh
-./App.sh
+ java -jar dist/JeuDeLaVie-1.0.jar 
 ```
 ## Structure du Projet
 # Jeu de la vie
@@ -48,9 +47,7 @@ Bienvenue dans le projet **Jeu de la vie**.
 ├── doc
 ├── lib
 ├── src
-│   ├── App.sh
 │   ├── Main.java
-│   ├── controller
 │   ├── icon.png
 │   ├── model
 │   │   ├── Cellule.java
@@ -64,7 +61,6 @@ Bienvenue dans le projet **Jeu de la vie**.
 │       ├── FooterPanel.java
 │       ├── PlateauView.java
 │       └── Screen.java
-└── test
 ```
 
 ## Contribuer
@@ -87,4 +83,4 @@ Bienvenue dans le projet **Jeu de la vie**.
 
 ## License
 
-Ce projet est en open source
+Ce projet est en open source, fait ce que vous voulez 

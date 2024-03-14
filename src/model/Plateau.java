@@ -1,9 +1,24 @@
 package model;
 
-
+/**
+ * Represents the grid or board for a cellular automaton simulation, such as Conway's Game of Life.
+ * This class manages a grid of cells, each of which can be in an active (alive) or inactive (dead) state.
+ * It provides functionality to initialize the grid, reset it, calculate the next generation of cells based
+ * on specific rules, and access the state of individual cells.
+ */
 public class Plateau {
-    Cellule [][] grilleDeCellule;
+    // A 2D array of Cellule objects representing the grid.
+    Cellule[][] grilleDeCellule;
+    // Dimensions of the grid.
     private int ligne, colonne;
+
+    /**
+     * Constructs a Plateau with the specified number of rows and columns.
+     * Initializes the grid with Cellule objects.
+     * 
+     * @param ligne The number of rows in the grid.
+     * @param colonne The number of columns in the grid.
+     */
     public Plateau(int ligne, int colonne) {
         this.ligne = ligne;
         this.colonne = colonne;
@@ -11,47 +26,56 @@ public class Plateau {
         this.initialisationDeLaGrille();
     }
 
-    private void initialisationDeLaGrille(){
+    /**
+     * Initializes the grid by creating a new Cellule for each position.
+     */
+    private void initialisationDeLaGrille() {
         for (int i = 0; i < this.ligne; i++) {
             for (int j = 0; j < this.colonne; j++) {
-                this.grilleDeCellule[i][j] = new Cellule(i,j);
+                this.grilleDeCellule[i][j] = new Cellule(i, j);
             }
         }
     }
-    public void reInitialisationDeLaGrille(){
+
+    /**
+     * Resets the grid by setting the state of all cells to false (dead).
+     */
+    public void reInitialisationDeLaGrille() {
         for (int i = 0; i < this.ligne; i++) {
             for (int j = 0; j < this.colonne; j++) {
-                this.grilleDeCellule[i][j].setEtat(false);;
+                this.grilleDeCellule[i][j].setEtat(false);
             }
         }
     }
-    public void afficheGrille(){
+
+    /**
+     * Prints the state of the grid to the console.
+     */
+    public void afficheGrille() {
         for (int i = 0; i < this.ligne; i++) {
             for (int j = 0; j < this.colonne; j++) {
                 System.out.print(this.grilleDeCellule[i][j].getEtat() + "  ");
             }
             System.out.println("\n");
         }
-
     }
+
     /**
-     * C'est une méthode privée utiliser par la méthode nextGeneration
-     * Elle compte le nombre des voisines vivantes d'une cellule et renvoie ce nombre
-     * @param row la ligne
-     * @param col la colonne
-     * @return
+     * Counts the number of living neighbors around a given cell.
+     * 
+     * @param grille The grid of cells.
+     * @param row The row index of the cell.
+     * @param col The column index of the cell.
+     * @return The number of living neighbors.
      */
     private int countLivingNeighbors(Cellule[][] grille, int row, int col) {
         int count = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) {
-                    // C'est la cellule elle même
-                    continue;
-                }
+                if (i == 0 && j == 0) continue; // Skip the cell itself.
                 int r = row + i;
                 int c = col + j;
-                // vérifier qu'on deborde pas la grille pour éviter IndexOutOfBoundsException
+                // Check boundaries.
                 if (r >= 0 && r < this.ligne && c >= 0 && c < this.colonne) {
                     count += grille[r][c].getEtat() ? 1 : 0;
                 }
@@ -59,11 +83,14 @@ public class Plateau {
         }
         return count;
     }
+
     /**
-     * Compte le nombre des cellules vivantes dans la grille et retourne ce nombre
-     * @return 
+     * Counts the number of living cells in the grid.
+     * 
+     * @param grille The grid of cells.
+     * @return The number of living cells.
      */
-    public int countLivingCellule(Cellule[][] grille){
+    public int countLivingCellule(Cellule[][] grille) {
         int count = 0;
         for (int i = 0; i < this.ligne; i++) {
             for (int j = 0; j < this.colonne; j++) {
@@ -72,7 +99,13 @@ public class Plateau {
         }
         return count;
     }
-    private Cellule[][] cloneArray(){
+
+    /**
+     * Creates a deep clone of the grid.
+     * 
+     * @return A clone of the current grid.
+     */
+    private Cellule[][] cloneArray() {
         Cellule[][] tmp = new Cellule[this.ligne][this.colonne];
         for (int i = 0; i < this.ligne; i++) {
             for (int j = 0; j < this.colonne; j++) {
@@ -81,24 +114,27 @@ public class Plateau {
         }
         return tmp;
     }
+
     /**
-     * Calcule la génération suivante
-     * @return
+     * Calculates the next generation of the grid based on the current state.
+     * 
+     * @return true if any cell's state has changed, otherwise false.
      */
-    public boolean nextGeneration(){
+    public boolean nextGeneration() {
         boolean change = false;
         Cellule[][] tmp = this.cloneArray();
         for (int i = 0; i < this.ligne; i++) {
             for (int j = 0; j < this.colonne; j++) {
-                int count = this.countLivingNeighbors(tmp,i, j);
+                int count = this.countLivingNeighbors(tmp, i, j);
                 if (tmp[i][j].getEtat()) {
+                    // Apply rules for living cells.
                     if (count != 2 && count != 3) {
                         this.grilleDeCellule[i][j].setEtat(false);
                         change = true;
                     }
-                }
-                else {
-                    if( count == 3){
+                } else {
+                    // Apply rules for dead cells.
+                    if (count == 3) {
                         this.grilleDeCellule[i][j].setEtat(true);
                         change = true;
                     }
@@ -107,19 +143,36 @@ public class Plateau {
         }
         return change;
     }
-    public Cellule [][] getGrilleDeCellule() {
+
+    /** 
+     * Returns the number of columns in the grid.
+     * @return The number of columns.
+     */
+    public int getColonne() {
+        return colonne;
+    }
+    /** 
+     * Returns the 2D array representing the grid of cells.
+     * @return The grid of cells.
+     */
+    public Cellule[][] getGrilleDeCellule() {
         return this.grilleDeCellule;
     }
 
-    public void setGrilleDeCellule(Cellule [][] grilleDeCellule) {
-        this.grilleDeCellule = grilleDeCellule;
-    }
-
+    /** 
+     * Returns the number of rows in the grid.
+     * @return The number of rows.
+     */
     public int getLigne() {
         return ligne;
     }
 
-    public int getColonne() {
-        return colonne;
+    /** 
+     * Sets the grid of cells.
+     * @param grilleDeCellule The new grid of cells.
+     */
+    public void setGrilleDeCellule(Cellule[][] grilleDeCellule) {
+        this.grilleDeCellule = grilleDeCellule;
     }
+   
 }
